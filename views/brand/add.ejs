@@ -1,0 +1,19 @@
+<% layout('layouts/boilerplate') %>
+    <div style="padding: 100px;">
+        <h1 class="text-center" style="font-size: 60px ;">Halaman Tambah Brand</h1>
+    </div>
+    <div>
+        <form action="/brand" method="post">
+            <div class="mb-3">
+                <label for="brandName" class="form-label">Nama Brand</label>
+                <input type="text" class="form-control" name="brand[brandName]" id="brandName" required>
+            </div>
+            <div class="mb-3">
+                <label for="brandLogo" class="form-label">Logo Brand</label>
+                <input type="url" class="form-control" name="brand[brandLogo]" id="brandLogo" required>
+                <!-- <input class="form-control" type="file" name="brandLogo" id="brandLogo"> -->
+                <div id="emailHelp" class="form-text">Ukuran img yang disarankan adalah 1:1</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>

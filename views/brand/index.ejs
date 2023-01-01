@@ -1,0 +1,26 @@
+<% layout('layouts/boilerplate') %>
+    <div style=" padding: 100px; ">
+        <h1 class="text-center" style="font-size: 60px ;">Produk Kami</h1>
+    </div>
+    <div style="padding-bottom: 20px;">
+        <a href="/brand/add" class="btn btn-primary">Add Brand</a>
+    </div>
+    <% if (getBrand==0) {%>
+        <%- include('../partials/emptyMsg') %>
+            <% } else { %>
+                <div class="row row-cols-1 row-cols-md-4 g-4">
+                    <% for(let brand of getBrand){ %>
+                        <a href="/brand/<%= brand.id %>" class="col" style="text-decoration: inherit;color: inherit;">
+                            <div class="card">
+                                <img style="height: 280px;" src="<%= brand.brandLogo %>"
+                                    class="card-img-top border-bottom" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">
+                                        <%= brand.brandName %>
+                                    </h5>
+                                </div>
+                            </div>
+                        </a>
+                        <% } %>
+                </div>
+                <% } %>
