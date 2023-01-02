@@ -9,6 +9,7 @@ const path = require('path');
 const BrandModels = require('./models/brandModels');
 const ProductModels = require('./models/productModels');
 const brandModels = require('./models/brandModels');
+const productModels = require('./models/productModels');
 
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs')
@@ -61,20 +62,49 @@ app.delete('/brand/brandDelete/:id', async (req, res) => {
     res.redirect("/brand")
 })
 // product
-app.get('/brand/:id', async (req, res) => {
+app.get('/brand/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const getBrand = await BrandModels.findById(id)
+        const getProduct = await ProductModels.find({ productStatus: 1, brandID: id })
+        const getProductInactive = await ProductModels.find({ productStatus: 0, brandID: id })
+        res.render("product/index", { getBrand, getProduct, getProductInactive })
+    } catch (e) {
+        next(e)
+    }
+})
+app.get('/brand/productEdit/:id', async (req, res) => {
     const { id } = req.params
-    const getBrand = await BrandModels.findById(id)
-    const getProduct = await ProductModels.find({ productStatus: 1, brandID: id })
-    const getProductInactive = await ProductModels.find({ productStatus: 0, brandID: id })
-    res.render("product/index", { getBrand, getProduct, getProductInactive })
+    const getProduct = await ProductModels.findById(id)
+    const getBrand = await brandModels.findById(getProduct.brandID)
+    res.render("product/edit", { getProduct, getBrand })
 })
 app.post('/brand/productAdd/:id', async (req, res) => {
     const newProduct = new ProductModels(req.body.product)
     await newProduct.save()
     res.redirect("back")
 })
+app.put('/brand/productEdit/:id', async (req, res) => {
+    const { id } = req.params
+    const updatedProduct = await productModels.findByIdAndUpdate(id, { ...req.body.product })
+    res.redirect(`/brand/${updatedProduct.brandID}`)
+})
+app.delete('/brand/productDelete/:id', async (req, res) => {
+    const { id } = req.params
+    const deletedProduct = await productModels.findById(id)
+    await productModels.findByIdAndDelete(id)
+    res.redirect(`/brand/${deletedProduct.brandID}`)
+})
 app.get('/contact', (req, res) => {
     res.render("contact")
+})
+// Account
+app.get('/register', (req, res) => {
+    res.render("register")
+})
+
+app.use((err, req, res, next) => {
+    res.send("PAGE NOT FOUND!")
 })
 
 app.listen(process.env.PORT || 3000, function () {

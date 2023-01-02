@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUN 21 - Edit Produk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="d-flex flex-column vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top ">
+        <div class="container">
+            <a class="navbar-brand" href="/">SUN 21</a>
+            <div>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="javascript:history.back()">Kembali</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Modal DELETE Confirm-->
+    <div class="modal fade" id="productModalDelete" tabindex="-1" aria-labelledby="productModalDeleteLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="productModalDeleteLabel">
+                        Konfirmasi Penghapusan Produk</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah anda ingin menghapus <b>
+                        <%= getProduct.productName %>
+                    </b>?
+                </div>
+                <div class="modal-footer">
+                    <form action="/brand/productDelete/<%= getProduct._id %>?_method=DELETE" method="post">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container px-5 py-3">
+        <div style="padding: 100px;">
+            <h1 class="text-center" style="font-size: 60px ;">Halaman Edit Produk</h1>
+        </div>
+        <div>
+            <form action="/brand/productEdit/<%= getProduct._id %>/?_method=PUT" method="post" class="needs-validation"
+                novalidate>
+                <!-- Modal Edit Confirm -->
+                <div class="modal fade" id="productModalEdit" tabindex="-1" aria-labelledby="productModalDeletEdit"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="productModalDeletEdit">
+                                    Konfirmasi Update Produk</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Apakah anda ingin memperbarui <b>
+                                    <%= getProduct.productName %>
+                                </b>?
+                            </div>
+                            <div class="modal-footer">
+                                <button data-bs-dismiss="modal" class="btn btn-primary">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label for="productName" class="form-label">Nama Produk</label>
+                        <input type="text" class="form-control" name="product[productName]" id="productName"
+                            value="<%= getProduct.productName %>" required>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label for="productPrice" class="form-label">Harga Produk</label>
+                        <input type="number" class="form-control" name="product[productPrice]" id="productPrice"
+                            value="<%= getProduct.productPrice %>" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="productImg" class="form-label">Foto Produk</label>
+                    <input type="url" class="form-control" name="product[productImg]" id="productImg"
+                        value="<%= getProduct.productImg %>" required>
+                    <!-- <input class="form-control" type="file" name="productImg" id="productImg"> -->
+                    <div class="form-text">Ukuran img yang disarankan adalah 1:1</div>
+                </div>
+                <div class="mb-3">
+                    <label for="productDesc" class="form-label">Deskripsi Produk</label>
+                    <textarea class="form-control" name="product[productDesc]" id="productDesc" cols="30" rows="10"
+                        required><%= getProduct.productDesc %></textarea>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label for="productQty" class="form-label">Qty Produk</label>
+                        <input type="number" class="form-control" name="product[productQty]" id="productQty"
+                            value="<%= getProduct.productQty %>" required>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label for="brandName" class="form-label">Brand Produk</label>
+                        <input type="text" class="form-control" name="brand[brandName]" id="brandName"
+                            value="<%= getBrand.brandName %>" required disabled>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="productStatus" class="col-form-label">Status Produk</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="product[productStatus]" value="1"
+                            id="radioAktif" required <% if(getProduct.productStatus==1) { %> checked <% } %> >
+                            <label class="form-check-label" for="radioAktif">
+                                Aktif
+                            </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="product[productStatus]" value="0"
+                            id="radioNonAktif" <% if(getProduct.productStatus==0) { %> checked <% } %>>
+                            <label class="form-check-label" for="radioNonAktif">
+                                Non-Aktif
+                            </label>
+                    </div>
+                </div>
+                <input type="hidden" class="form-control" name="product[brandID]" id="brandName"
+                    value="<%= getProduct.brandID %>" required disabled>
+                <div class="d-flex justify-content-between">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#productModalDelete"
+                        class="btn btn-danger">Delete</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#productModalEdit"
+                        class="btn btn-primary">Submit</button>
+                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+        <script>
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+        </script>
+</body>
+
+</html>
