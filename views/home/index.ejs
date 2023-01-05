@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') %>
+    <div style=" padding: 100px; ">
+        <h1 class="text-center">Solusi dari kebutuhan suply produk anda</h1>
+    </div>
+    <div style="padding-bottom: 20px;">
+        <a href="/addContent" class="btn btn-primary">Tambah Konten</a>
+    </div>
+    <div class="row" style=" margin-bottom:30px ;">
+        <!-- https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1 -->
+        <% for (let content of getContent) { %>
+            <div class="col-4 p-4">
+                <div class="card" style="width: 23rem; margin-bottom: 40px;">
+                    <img src="<%= content.img %> " class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title" style="
+                        text-align: justify;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1; 
+                    line-clamp: 1; 
+                    -webkit-box-orient: vertical;">
+                            <%= content.title %>
+                        </h5>
+                        <p class="card-text" style="
+                    text-align: justify;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 5; 
+                    line-clamp: 2; 
+                    -webkit-box-orient: vertical;">
+                            <%= content.desc %>
+                        </p>
+                        <a href="/detail/<%= content._id %>" class="btn btn-primary">More info</a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+    </div>
+    <div style="padding: 100px;">
+        <h1 class="text-center mb-5">Punya pertanyaan lebih lanjut?</h1>
+        <div class=" d-flex justify-content-center">
+            <a href="/contact" class="btn btn-primary">Hubungi Kami</a>
+        </div>
+    </div>

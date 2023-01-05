@@ -1,0 +1,36 @@
+<% layout('layouts/boilerplate') %>
+    <div style="padding: 100px;">
+        <h1 class="text-center" style="font-size: 60px ;">Halaman Registrasi Akun</h1>
+    </div>
+    <div>
+        <form action="/register" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" name="user[username]" id="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" class="form-control" name="user[email]" id="email" required>
+            </div>
+            <label for="phone" class="form-label">Nomor Telepon</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">+62</span>
+                <input type="number" class="form-control" name="user[phone]" id="phone" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Alamat</label>
+                <textarea class="form-control" name="user[address]" id="address" cols="30" rows="10"
+                    required></textarea>
+                <!-- <input type="text" class="form-control" name="user[address]" id="address"> -->
+                <div id="emailHelp" class="form-text">Boleh diisi nanti</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="user[password]" id="password" required>
+                <div id="emailHelp" class="form-text">Buatlah password yang sulit ditebak</div>
+            </div>
+            <input type="hidden" class="form-control" name="user[role]" id="role" required value="2">
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
