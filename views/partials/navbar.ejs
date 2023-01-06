@@ -17,18 +17,26 @@
                             aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <form class="dropdown-menu px-4 py-3">
-                            <div class="mb-3">
-                                <label for="exampleDropdownFormEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleDropdownFormEmail1"
-                                    placeholder="email@example.com">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleDropdownFormPassword1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="exampleDropdownFormPassword1"
-                                    placeholder="Password">
-                            </div>
-                            <!-- <div class="mb-3">
+                        <% if(!user_id){ %>
+                            <form action="/login" method="post" class="dropdown-menu px-4 py-3 needs-validation"
+                                novalidate>
+                                <div class="mb-3">
+                                    <label for="usenrame" class="form-label">Username</label>
+                                    <input type="text" class="form-control" name="user[username]" id="usenrame"
+                                        required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" name="user[password]" id="password"
+                                        required>
+                                </div>
+                                <!-- <div id="incorectIndicator" class="mb-2" hidden>
+                                <label class="form-check-label text-danger" for="dropdownCheck">
+                                    Warn
+                                </label>
+                            </div> -->
+
+                                <!-- <div class="mb-3">
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="dropdownCheck">
                                     <label class="form-check-label" for="dropdownCheck">
@@ -36,11 +44,15 @@
                                     </label>
                                 </div>
                             </div> -->
-                            <button type="submit" class="btn btn-primary">Sign in</button>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/register">New around here? Sign up</a>
-                            <a class="dropdown-item" href="#">Forgot password?</a>
-                        </form>
+                                <button type="submit" class="btn btn-primary">Masuk</button>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/register">New around here? Sign up</a>
+                                <a class="dropdown-item" href="#">Forgot password?</a>
+                            </form>
+                            <% } else { %>
+                                <label for="usenrame" class="form-label">Selamat Datang, <%= %></label>
+                                <a class="dropdown-item" href="/logout">Log Out</a>
+                                <% } %>
                     </div>
                 </div>
             </div>

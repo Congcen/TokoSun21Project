@@ -1,8 +1,10 @@
 const express = require('express')
+const session = require('express-session')
 const mongoose = require('mongoose')
 const app = express();
 const methodOverride = require('method-override')
 const ejsMate = require("ejs-mate")
+const bcrypt = require("bcrypt")
 const catchAsync = require("./utils/catchAsync")
 const path = require('path');
 
@@ -19,6 +21,13 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.use(session({ secret: 'notagoodsecret' }))
+app.use(function (req, res, next) {
+    res.locals.user_id = req.session.user_id;
+    res.locals.user_role = req.session.user_role;
+    res.locals.user_fullname = req.session.user_fullname;
+    next();
+});
 
 // db connection
 async function main() {
@@ -112,14 +121,54 @@ app.get('/contact', (req, res) => {
     res.render("contact")
 })
 // Account
+app.get('/account/:id', async (req, res) => {
+    const { id } = req.params
+    const sessionId = req.session.user_id
+    if (sessionId && sessionId == id) {
+        const getUser = await UserModels.findById(id)
+        res.render("account/detail", { getUser })
+    } else {
+        res.send("eits.. cek")
+    }
+})
 app.get('/register', (req, res) => {
     res.render("account/register")
 })
 app.post('/register', catchAsync(async (req, res) => {
-    const newUser = new UserModels(req.body.user)
-    await newUser.save()
-    res.render("account/registerSuccess")
+    const { username, password, email, phone, address, fullname } = req.body.user
+    const validateUsername = await UserModels.findOne({ username })
+    if (!validateUsername) {
+        const hash = await bcrypt.hash(password, 12)
+        const newUser = new UserModels({ username, password: hash, fullname, email, phone: `+62${phone}`, address, role: 2 })
+        const userData = await newUser.save()
+        req.session.user_id = userData._id
+        req.session.user_role = userData.role
+        req.session.user_fullname = userData.fullname
+        res.redirect(`/account/${userData._id}`)
+    } else {
+        res.send("username telah terdaftar")
+    }
 }))
+app.post('/login', catchAsync(async (req, res) => {
+    const { username, password } = req.body.user
+    const user = await UserModels.findOne({ username })
+    const validPassword = await bcrypt.compare(password, user.password)
+    if (validPassword) {
+        req.session.user_id = user._id
+        req.session.user_role = user.role
+        req.session.user_fullname = user.fullname
+        res.redirect(`/account/${user._id}`)
+    } else {
+        res.send("try again")
+    }
+}))
+
+app.get('/secret', (req, res) => {
+    if (!req.session.user_id) {
+        res.send('u need to login first')
+    }
+    res.send(req.session.user_id)
+})
 
 app.use((err, req, res, next) => {
     res.send("PAGE NOT FOUND!")
