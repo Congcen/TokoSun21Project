@@ -15,6 +15,10 @@
                         href="#list-messages" role="tab" aria-controls="list-messages">WhatsApp</a>
                     <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list"
                         href="#list-settings" role="tab" aria-controls="list-settings">Offline Store</a>
+                    <% if (user_role==1) {%>
+                        <a class="list-group-item list-group-item-action" id="list-add-admin-list" data-bs-toggle="list"
+                            href="#list-add-admin" role="tab" aria-controls="list-add-admin">Registrasi Admin</a>
+                        <% } %>
                 </div>
             </div>
             <div class="col-8">
@@ -217,8 +221,6 @@
                             <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
                                 <div class="card-header fw-bold">Jam Buka/Tutup</div>
                                 <div class="card-body">
-                                    <!-- <h5 class="card-title">Jam Buka/Tutup</h5> -->
-
                                     <p class="card-text">Monday 5AM–12AM</p>
                                     <p class="card-text">Tuesday 5AM–12AM</p>
                                     <p class="card-text">Wednesday 5AM–12AM</p>
@@ -229,6 +231,44 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="tab-pane fade" id="list-add-admin" role="tabpanel"
+                        aria-labelledby="list-add-admin-list">
+                        <h1 class="text-primary">Registrasi Admin</h1>
+                        <form action="/registerAdm" method="post" class="row g-3 needs-validation" novalidate>
+                            <div class="col-md-6">
+                                <label for="fullname" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="fullname" name="user[fullname]" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="user[username]" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="user[password]"
+                                    required>
+                            </div>
+                            <div class="col-6">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="email" name="user[email]" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="phone" class="form-label">Nomor Telepon</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">+62</span>
+                                    <input type="number" class="form-control" name="user[phone]" id="phone" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="address" class="form-label">Address</label>
+                                <textarea class="form-control" id="address" name="user[address]" cols="30" rows="10"
+                                    required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

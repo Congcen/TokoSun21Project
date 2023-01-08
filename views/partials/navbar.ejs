@@ -17,41 +17,48 @@
                             aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <% if(!user_id){ %>
-                            <form action="/login" method="post" class="dropdown-menu px-4 py-3 needs-validation"
-                                novalidate>
-                                <div class="mb-3">
-                                    <label for="usenrame" class="form-label">Username</label>
-                                    <input type="text" class="form-control" name="user[username]" id="usenrame"
-                                        required>
+                        <% if(!user_id) { %>
+                            <form action="/login" method="post" class="dropdown-menu needs-validation" novalidate>
+                                <div class="px-4 pt-3">
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" class="form-control" name="user[username]" id="username"
+                                            required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" name="user[password]" id="password"
+                                            required>
+                                    </div>
+                                    <button type="submit" class="mb-2 btn btn-primary">Masuk</button>
                                 </div>
-                                <div class="mb-2">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" name="user[password]" id="password"
-                                        required>
-                                </div>
-                                <!-- <div id="incorectIndicator" class="mb-2" hidden>
-                                <label class="form-check-label text-danger" for="dropdownCheck">
-                                    Warn
-                                </label>
-                            </div> -->
-
-                                <!-- <div class="mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                                    <label class="form-check-label" for="dropdownCheck">
-                                        Remember me
-                                    </label>
-                                </div>
-                            </div> -->
-                                <button type="submit" class="btn btn-primary">Masuk</button>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/register">New around here? Sign up</a>
-                                <a class="dropdown-item" href="#">Forgot password?</a>
+                                <!-- <a class="dropdown-item" href="#">Forgot password?</a> -->
                             </form>
-                            <% } else { %>
-                                <label for="usenrame" class="form-label">Selamat Datang, <%= %></label>
-                                <a class="dropdown-item" href="/logout">Log Out</a>
+                            <% } else {%>
+                                <div class="dropdown-menu ">
+                                    <div class="px-4 pt-3 text-center">
+                                        <img class="img-fluid"
+                                            src="https://icon-library.com/images/facebook-user-icon/facebook-user-icon-17.jpg"
+                                            alt="...">
+                                        <h5>
+                                            <%= user_fname %>
+                                        </h5>
+                                        <p>
+                                            <% if(user_role==1) { %>
+                                                admin
+                                                <% } else if (user_role==2){%>
+                                                    customer
+                                                    <% } %>
+                                        </p>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/account/<%= user_id %>">My Account</a>
+                                    <form action="/logout" method="post">
+                                        <button class="dropdown-item">Log Out</button>
+                                    </form>
+                                </div>
                                 <% } %>
                     </div>
                 </div>

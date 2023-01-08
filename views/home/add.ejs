@@ -4,13 +4,15 @@
     </div>
     <div>
         <form action="/addContent" method="post" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="contentTitle" class="form-label">Judul Konten</label>
-                <input type="text" class="form-control" name="content[title]" id="contentTitle" required>
-            </div>
-            <div class="mb-3">
-                <label for="contentImg" class="form-label">Banner Konten</label>
-                <input type="url" class="form-control" name="content[img]" id="contentImg" required>
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <label for="contentTitle" class="form-label">Judul Konten</label>
+                    <input type="text" class="form-control" name="content[title]" id="contentTitle" required>
+                </div>
+                <div class="col-6 mb-3">
+                    <label for="contentImg" class="form-label">Banner Konten</label>
+                    <input type="url" class="form-control" name="content[img]" id="contentImg" required>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="contentDesc" class="form-label">Deskripsi Konten</label>

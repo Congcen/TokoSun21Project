@@ -6,6 +6,7 @@ const methodOverride = require('method-override')
 const ejsMate = require("ejs-mate")
 const bcrypt = require("bcrypt")
 const catchAsync = require("./utils/catchAsync")
+const ExpressError = require("./utils/ExpressError")
 const path = require('path');
 
 // MODELS
@@ -25,7 +26,7 @@ app.use(session({ secret: 'notagoodsecret' }))
 app.use(function (req, res, next) {
     res.locals.user_id = req.session.user_id;
     res.locals.user_role = req.session.user_role;
-    res.locals.user_fullname = req.session.user_fullname;
+    res.locals.user_fname = req.session.user_fname;
     next();
 });
 
@@ -38,14 +39,17 @@ async function main() {
         console.log("Oops.. Connection Error")
     }
 } main()
-
+const msgAdminOnly = "Akses Ditolak! Hanya dapat diakses oleh admin"
 // home
 app.get('/', catchAsync(async (req, res) => {
     const getContent = await ContentModels.find({})
     res.render("home/index", { getContent })
 }))
 app.get('/addContent', (req, res) => {
-    res.render("home/add")
+    if (req.session.user_role == 1) {
+        res.render("home/add")
+    }
+    throw new ExpressError(msgAdminOnly, 999)
 })
 app.post('/addContent', catchAsync(async (req, res) => {
     const newContent = new ContentModels(req.body.content)
@@ -69,7 +73,10 @@ app.get('/brand', catchAsync(async (req, res) => {
     res.render("brand/index", { getBrand })
 }))
 app.get('/brand/add', (req, res) => {
-    res.render("brand/add")
+    if (req.session.user_role == 1) {
+        res.render("brand/add")
+    }
+    res.send(msgAdminOnly)
 })
 app.post('/brand', catchAsync(async (req, res) => {
     const newBrand = new BrandModels(req.body.brand)
@@ -95,10 +102,13 @@ app.get('/brand/:id', catchAsync(async (req, res, next) => {
     res.render("product/index", { getBrand, getProduct, getProductInactive })
 }))
 app.get('/brand/productEdit/:id', catchAsync(async (req, res) => {
-    const { id } = req.params
-    const getProduct = await ProductModels.findById(id)
-    const getBrand = await BrandModels.findById(getProduct.brandID)
-    res.render("product/edit", { getProduct, getBrand })
+    if (req.session.user_role == 1) {
+        const { id } = req.params
+        const getProduct = await ProductModels.findById(id)
+        const getBrand = await BrandModels.findById(getProduct.brandID)
+        res.render("product/edit", { getProduct, getBrand })
+    }
+    res.send(msgAdminOnly)
 }))
 app.post('/brand/productAdd/:id', catchAsync(async (req, res) => {
     const newProduct = new ProductModels(req.body.product)
@@ -116,19 +126,32 @@ app.delete('/brand/productDelete/:id', catchAsync(async (req, res) => {
     await ProductModels.findByIdAndDelete(id)
     res.redirect(`/brand/${deletedProduct.brandID}`)
 }))
-
+// contact
 app.get('/contact', (req, res) => {
-    res.render("contact")
+    res.render("contact/index")
 })
-// Account
+app.post('/registerAdm', catchAsync(async (req, res) => {
+    const { username, password, email, phone, address, fullname } = req.body.user
+    const validateUsername = await UserModels.findOne({ username })
+    if (!validateUsername) {
+        const hash = await bcrypt.hash(password, 12)
+        const newUser = new UserModels({ username, password: hash, fullname, email, phone: `+62${phone}`, address, role: 1 })
+        await newUser.save()
+        res.render('contact/registerSuccess')
+    } else {
+        throw new ExpressError('Username telah terdaftar', 999)
+    }
+}))
+
+// account
 app.get('/account/:id', async (req, res) => {
     const { id } = req.params
     const sessionId = req.session.user_id
-    if (sessionId && sessionId == id) {
+    if (sessionId == id) {
         const getUser = await UserModels.findById(id)
         res.render("account/detail", { getUser })
     } else {
-        res.send("eits.. cek")
+        throw new ExpressError('Akun tidak ditemukan', 999)
     }
 })
 app.get('/register', (req, res) => {
@@ -142,11 +165,11 @@ app.post('/register', catchAsync(async (req, res) => {
         const newUser = new UserModels({ username, password: hash, fullname, email, phone: `+62${phone}`, address, role: 2 })
         const userData = await newUser.save()
         req.session.user_id = userData._id
-        req.session.user_role = userData.role
-        req.session.user_fullname = userData.fullname
+        req.session.user_role = 2
+        req.session.user_fname = userData.fullname
         res.redirect(`/account/${userData._id}`)
     } else {
-        res.send("username telah terdaftar")
+        throw new ExpressError('Username telah terdaftar', 999)
     }
 }))
 app.post('/login', catchAsync(async (req, res) => {
@@ -156,22 +179,31 @@ app.post('/login', catchAsync(async (req, res) => {
     if (validPassword) {
         req.session.user_id = user._id
         req.session.user_role = user.role
-        req.session.user_fullname = user.fullname
+        req.session.user_fname = user.fullname
         res.redirect(`/account/${user._id}`)
     } else {
-        res.send("try again")
+        throw new ExpressError('Username atau password salah', 999)
     }
 }))
+app.post('/logout', catchAsync(async (req, res) => {
+    req.session.destroy()
+    res.redirect("/")
+}))
+
 
 app.get('/secret', (req, res) => {
-    if (!req.session.user_id) {
-        res.send('u need to login first')
+    if (req.session.user_role == 1) {
+        res.send(req.session.user_id)
     }
-    res.send(req.session.user_id)
+    res.send('u need to login as an admin')
 })
-
+app.all('*', (req, res, next) => {
+    next(new ExpressError("Halaman tidak ditemukan"), 404)
+})
 app.use((err, req, res, next) => {
-    res.send("PAGE NOT FOUND!")
+    const { statusCode = 500 } = err
+    if (!err.message) err.message = 'Oh no.. Error :('
+    res.status(statusCode).render('error', { err })
 })
 
 app.listen(process.env.PORT || 3000, function () {

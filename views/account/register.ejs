@@ -4,13 +4,20 @@
     </div>
     <div>
         <form action="/register" method="post" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="fullname" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" name="user[fullname]" id="fullname" required>
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <label for="fullname" class="form-label">Nama Lengkap</label>
+                    <input type="text" class="form-control" name="user[fullname]" id="fullname" required>
+                </div>
+                <div class="col-6 mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" name="user[username]" id="username" required>
+                </div>
             </div>
             <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" name="user[username]" id="username" required>
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="user[password]" id="password" required>
+                <div id="emailHelp" class="form-text">Buatlah password yang sulit ditebak</div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
@@ -27,13 +34,6 @@
                     required></textarea>
                 <!-- <input type="text" class="form-control" name="user[address]" id="address"> -->
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" name="user[password]" id="password" required>
-                <div id="emailHelp" class="form-text">Buatlah password yang sulit ditebak</div>
-            </div>
-            <input type="hidden" class="form-control" name="user[role]" id="role" required value="2">
-
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
