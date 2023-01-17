@@ -126,12 +126,13 @@
 		<% } %>
 			<div class="d-flex py-5" id="brandProfile">
 				<img class="border border-dark-subtle" src="<%= getBrand.brandLogo %> " alt="..." style="
+				background-color: white;
             width: 100px; height: 100px;margin-right: 20px;
             box-shadow: 10px 10px 14px -4px rgba(0,0,0,0.43);
 -webkit-box-shadow: 10px 10px 14px -4px rgba(0,0,0,0.43);
 -moz-box-shadow: 10px 10px 14px -4px rgba(0,0,0,0.43);" class="rounded">
 				<div class="row" style="width: 100%;">
-					<h1 style="font-size: 32px;">
+					<h1 style="font-size: 32px; color: #2B3467;">
 						<%= getBrand.brandName %>
 							<% if(user_role==1) {%>
 								<button style="all: unset; cursor: pointer;" data-bs-toggle="modal"
@@ -185,8 +186,7 @@
 
 													<ul class="list-group list-group-flush">
 														<li class="list-group-item fw-bold">
-															<!-- Rp.10.000,00 -->
-															<%= product.productPrice %>
+															<% product.productPrice %>
 														</li>
 													</ul>
 													<div class="card-body d-flex">
@@ -211,61 +211,64 @@
 									<% } %>
 					</div>
 					<!-- BATAS -->
-					<div class="tab-pane fade" id="inactive-tab-pane" role="tabpanel" aria-labelledby="inactive-tab"
-						tabindex="0">
-						<% if(getProductInactive==0) {%>
-							<%- include('../partials/emptyMsg') %>
-								<% } else {%>
-									<div class="row row-cols-1 row-cols-md-5 g-4 pt-4">
-										<% for(let product of getProductInactive) {%>
-											<div class="col">
-												<div class="card">
-													<img src="<%= product.productImg %>" class="card-img-top" alt="...">
-													<div class="card-body">
-														<h5 class="card-title" style="overflow: hidden;
+					<% if(user_role==1 ) { %>
+						<div class="tab-pane fade" id="inactive-tab-pane" role="tabpanel" aria-labelledby="inactive-tab"
+							tabindex="0">
+							<% if(getProductInactive==0) {%>
+								<%- include('../partials/emptyMsg') %>
+									<% } else {%>
+										<div class="row row-cols-1 row-cols-md-5 g-4 pt-4">
+											<% for(let product of getProductInactive) {%>
+												<div class="col">
+													<div class="card">
+														<img src="<%= product.productImg %>" class="card-img-top"
+															alt="...">
+														<div class="card-body">
+															<h5 class="card-title" style="overflow: hidden;
                                                 text-overflow: ellipsis;
                                                 display: -webkit-box;
                                                 -webkit-line-clamp: 2; 
                                                         line-clamp: 2; 
                                                 -webkit-box-orient: vertical;">
-															<%= product.productName %>
-														</h5>
-														<p class="card-text" style="overflow: hidden;
+																<%= product.productName %>
+															</h5>
+															<p class="card-text" style="overflow: hidden;
                                                 text-overflow: ellipsis;
                                                 display: -webkit-box;
                                                 -webkit-line-clamp: 3; 
                                                         line-clamp: 2; 
                                                 -webkit-box-orient: vertical;">
-															<%= product.productDesc %>
-														</p>
-													</div>
-													<ul class="list-group list-group-flush">
-														<li class="list-group-item fw-bold">
-															<!-- Rp.10.000,00 -->
-															<%= product.productPrice %>
-														</li>
-													</ul>
+																<%= product.productDesc %>
+															</p>
+														</div>
+														<ul class="list-group list-group-flush">
+															<li class="list-group-item fw-bold">
+																<!-- Rp.10.000,00 -->
+																<%= product.productPrice %>
+															</li>
+														</ul>
 
-													<div class="card-body d-flex">
-														<% if(user_role==1) {%>
-															<a href="/brand/productEdit/<%= product._id %>"
-																class="btn btn-outline-warning col-12 btn-sm">Edit</a>
-															<% } else if(user_role==2) { %>
-																<a href="#"
-																	class="btn btn-outline-success col-12 btn-sm">+
-																	Keranjang</a>
-																<% } %>
-													</div>
+														<div class="card-body d-flex">
+															<% if(user_role==1) {%>
+																<a href="/brand/productEdit/<%= product._id %>"
+																	class="btn btn-outline-warning col-12 btn-sm">Edit</a>
+																<% } else if(user_role==2) { %>
+																	<a href="#"
+																		class="btn btn-outline-success col-12 btn-sm">+
+																		Keranjang</a>
+																	<% } %>
+														</div>
 
-													<div class="card-footer">
-														<small class="text-muted">Produk tersedia <%=
-																product.productQty%>
-														</small>
+														<div class="card-footer">
+															<small class="text-muted">Produk tersedia <%=
+																	product.productQty%>
+															</small>
+														</div>
 													</div>
 												</div>
-											</div>
-											<% } %>
-									</div>
-									<% } %>
-					</div>
+												<% } %>
+										</div>
+										<% } %>
+						</div>
+						<% } %>
 				</div>

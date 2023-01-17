@@ -2,18 +2,71 @@
     <!-- <div style="padding: 100px;">
         <h1 class="text-center" style="font-size: 60px ;">Anda telah berhasil melakukan Registrasi!</h1>
     </div> -->
-    <div>
-        <h1 class="display-5 text-capitalize">Selamat datang, <%= getUser.fullname %>
-        </h1>
-        <p>username anda : <%= getUser.username %>
-        </p>
-        <p>email anda : <%= getUser.email %>
-        </p>
-        <p>nomor telepon anda : <%= getUser.phone %>
-        </p>
-        <p>alamat anda : <%= getUser.address %>
-        </p>
-        <p>alamat anda : <%= getUser.fullname %>
-        </p>
-        <h6>jangan beri tahukan informasi ini kepada siapapun!</h6>
-    </div>
+    <section class="d-flex justify-content-center">
+        <img class="img-fluid" src="https://icon-library.com/images/facebook-user-icon/facebook-user-icon-17.jpg"
+            alt="..." style="border-radius: 50%; width: 200px; height: 200px;">
+    </section>
+    <h1 class="display-5 text-capitalize text-center py-4">Selamat datang, <%= getUser.fullname %>
+    </h1>
+    <section class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Profil Anda</h5>
+                    <p class="card-text">Mohon untuk selalu menjaga informasi ini!</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between"><span>Username</span><span>
+                            <%= getUser.username %>
+                        </span></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>E-mail</span><span>
+                            <%= getUser.email %>
+                        </span></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>No Telpon</span><span>
+                            <%= getUser.phone %>
+                        </span></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Alamat</span><span>
+                            <%= getUser.address %>
+                        </span></li>
+                </ul>
+                <div class="card-body d-flex justify-content-between">
+                    <a href="#" class="card-link">Delete Account</a>
+                    <a href="#" class="card-link">Edit Account</a>
+                </div>
+            </div>
+            </p>
+        </div>
+        <div class="col-4">
+            <div class="card mb-3" style="max-width: 18rem;">
+                <div class="card-header">Riwayat Pemesanan</div>
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                        <div class="d-flex w-100">
+                            <h5 class="mb-1">List group item heading</h5>
+
+                        </div>
+                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                        <small>And some small print.</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100">
+                            <h5 class="mb-1">List group item heading</h5>
+                        </div>
+                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                        <small class="text-muted">And some muted small print.</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100">
+                            <h5 class="mb-1">List group item heading</h5>
+                        </div>
+                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                        <small class="text-muted">And some muted small print.</small>
+                    </a>
+                </div>
+
+                <div class="card-footer text-muted">
+                    <a href="#">More..</a>
+                </div>
+            </div>
+        </div>
+    </section>

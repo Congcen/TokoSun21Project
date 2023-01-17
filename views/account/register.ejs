@@ -3,7 +3,7 @@
         <h1 class="text-center" style="font-size: 60px ;">Halaman Registrasi Akun</h1>
     </div>
     <div>
-        <form action="/register" method="post" class="needs-validation" novalidate>
+        <form action="/account/register" method="post" class="needs-validation" novalidate>
             <div class="row">
                 <div class="col-6 mb-3">
                     <label for="fullname" class="form-label">Nama Lengkap</label>
@@ -26,7 +26,8 @@
             <label for="phone" class="form-label">Nomor Telepon</label>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">+62</span>
-                <input type="number" class="form-control" name="user[phone]" id="phone" required>
+                <input type="number" class="form-control" name="user[phone]" id="phone" required maxlength="11"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Alamat</label>
@@ -34,6 +35,6 @@
                     required></textarea>
                 <!-- <input type="text" class="form-control" name="user[address]" id="address"> -->
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-dark" style="background-color: #2B3467;">Submit</button>
         </form>
     </div>

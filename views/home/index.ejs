@@ -1,48 +1,126 @@
 <% layout('layouts/boilerplate') %>
-    <div style=" padding: 100px; ">
+    <!-- <div style=" padding: 100px; ">
         <h1 class="text-center">Solusi dari kebutuhan suply produk anda</h1>
+    </div> -->
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel"
+        style="height: 550px; background-color: white;">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a href="#">
+                    <img src="https://img.freepik.com/free-vector/mega-sale-offers-banner-template_1017-31299.jpg?w=2000"
+                        class="d-block w-100" alt="..." style="height: 550px; object-fit: cover;">
+                </a>
+            </div>
+            <% for(let content of getContentForSlide) { %>
+                <div class="carousel-item">
+                    <a href="/detail/<%= content._id %>">
+                        <img src="<%= content.img %>" class="d-block w-100" alt="..."
+                            style="height: 550px; object-fit: cover;">
+                    </a>
+                </div>
+                <% } %>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
+
     <% if(user_role==1) {%>
-        <div style="padding-bottom: 20px;">
-            <a href="/addContent" class="btn btn-primary">Tambah Konten</a>
+        <div class="py-4">
+            <a href="/add" class="btn btn-dark" style="background-color: #2B3467;">Tambah Konten</a>
         </div>
         <% } %>
-            <div class="row" style=" margin-bottom:30px ;">
-                <!-- https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1 -->
-                <% for (let content of getContent) { %>
-                    <div class="col-4 p-4">
-                        <div class="card" style="width: 23rem; margin-bottom: 40px;">
-                            <img src="<%= content.img %> " class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title" style="
-                        text-align: justify;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 1; 
-                    line-clamp: 1; 
-                    -webkit-box-orient: vertical;">
-                                    <%= content.title %>
-                                </h5>
-                                <p class="card-text" style="
-                    text-align: justify;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 5; 
-                    line-clamp: 2; 
-                    -webkit-box-orient: vertical;">
-                                    <%= content.desc %>
-                                </p>
-                                <a href="/detail/<%= content._id %>" class="btn btn-primary">More info</a>
+            <section>
+                <h3>Promo</h3>
+                <div class="row">
+                    <% for (let content of getContent) { %>
+                        <a href="/detail/<%= content._id %>" class="col-4"
+                            style="text-decoration: inherit;color: inherit; margin-bottom:25px;">
+                            <div class="card">
+                                <img style="height: 280px;" src="<%= content.img %>" class="card-img-top border-bottom"
+                                    alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="
+                                    text-align: justify;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 1; 
+                                -webkit-box-orient: vertical;">
+                                        <%= content.title %>
+                                    </h5>
+                                    <div class="dropdown-divider"></div>
+                                    <p class="card-text" style="
+                                    text-align: justify;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 3; 
+                                    -webkit-box-orient: vertical;">
+                                        <%= content.desc %>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <% } %>
-            </div>
-            <div style="padding: 100px;">
-                <h1 class="text-center mb-5">Punya pertanyaan lebih lanjut?</h1>
-                <div class=" d-flex justify-content-center">
-                    <a href="/contact" class="btn btn-primary">Hubungi Kami</a>
+                        </a>
+                        <% } %>
                 </div>
-            </div>
+
+            </section>
+            <section>
+                <!-- <div class="container"> -->
+                <h3>Newest Product</h3>
+                <div class="row row-cols-1 row-cols-md-4 g-4">
+                    <% for(let product of getNewestProduct){ %>
+                        <a href="/brand/<%= product.brandID %>" class="col"
+                            style="text-decoration: inherit;color: inherit;">
+                            <div class="card">
+                                <img style="height: 280px;" src="<%= product.productImg %>"
+                                    class="card-img-top border-bottom" alt="...">
+                                <div class="card-body">
+                                    <h6 class="card-title text-center" style="overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2; 
+                                    -webkit-box-orient: vertical;">
+                                        <%= product.productName %>
+                                    </h6>
+                                </div>
+                            </div>
+                        </a>
+                        <% } %>
+                </div>
+                <!-- </div> -->
+            </section>
+
+            <section>
+                <!-- <div class="container"> -->
+                <h3>Featured Product</h3>
+                <div class="row row-cols-1 row-cols-md-4 g-4">
+                    <% for(let product of getFeaturedProduct){ %>
+                        <a href="/brand/<%= product.brandID %>" class="col"
+                            style="text-decoration: inherit;color: inherit;">
+                            <div class="card">
+                                <img style="height: 280px;" src="<%= product.productImg %>"
+                                    class="card-img-top border-bottom" alt="...">
+                                <div class="card-body">
+                                    <h6 class="card-title text-center" style="overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2; 
+                                    -webkit-box-orient: vertical;">
+                                        <%= product.productName %>
+                                    </h6>
+                                </div>
+                            </div>
+                        </a>
+                        <% } %>
+                </div>
+                <!-- </div> -->
+            </section>

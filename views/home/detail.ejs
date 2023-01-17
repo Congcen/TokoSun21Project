@@ -1,18 +1,43 @@
 <% layout('layouts/subBoilerplate') %>
-    <div>
-        <img src="<%= getContent.img %>" alt="" style="height: 400px; width: 100%; object-fit: cover;">
-    </div>
-    <div>
-        <h3>
-            <%= getContent.title %>
-        </h3>
-        <p>
-            <%= getContent.desc %>
-        </p>
-    </div>
-    <% if(user_role==1) {%>
-        <div class="d-flex justify-content-between">
-            <button class="btn btn-primary">Edit</button>
-            <button class="btn btn-danger">Delete</button>
+    <!-- Modal Delete Content -->
+    <div class="modal fade" id="contentModalDelete" tabindex="-1" aria-labelledby="contentModalDeleteLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="contentModalDeleteLabel">Konfirmasi
+                        Penghapusan Konten</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah anda ingin menghapus <b>
+                        <%= getContent.title %>
+                    </b>?
+                </div>
+                <div class="modal-footer">
+                    <form action="/delete/<%= getContent._id %>?_method=DELETE" method="post">
+                        <button class="btn btn-danger">Hapus</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <% } %>
+    </div>
+
+    <div class="card">
+        <img src=" <%=getContent.img %>" class="card-img-top" alt="..." style="max-height: 500px; object-fit: cover;">
+        <div class="card-body">
+            <h5 class="card-title">
+                <%= getContent.title %>
+            </h5>
+            <p class="card-text">
+                <%= getContent.desc %>
+            </p>
+            <% if(user_role==1) {%>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-danger" style="width: 10%;" data-bs-toggle="modal"
+                        data-bs-target="#contentModalDelete">Hapus</button>
+                    <a href="#" class="btn btn-dark" style="background-color: #2B3467; width: 10%">Edit</a>
+                </div>
+                <% } %>
+        </div>
+    </div>

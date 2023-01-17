@@ -235,7 +235,7 @@
                     <div class="tab-pane fade" id="list-add-admin" role="tabpanel"
                         aria-labelledby="list-add-admin-list">
                         <h1 class="text-primary">Registrasi Admin</h1>
-                        <form action="/registerAdm" method="post" class="row g-3 needs-validation" novalidate>
+                        <form action="/contact/registerAdm" method="post" class="row g-3 needs-validation" novalidate>
                             <div class="col-md-6">
                                 <label for="fullname" class="form-label">Nama Lengkap</label>
                                 <input type="text" class="form-control" id="fullname" name="user[fullname]" required>
@@ -257,7 +257,9 @@
                                 <label for="phone" class="form-label">Nomor Telepon</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">+62</span>
-                                    <input type="number" class="form-control" name="user[phone]" id="phone" required>
+                                    <input type="number" class="form-control" name="user[phone]" id="phone" required
+                                        maxlength="11"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -266,7 +268,8 @@
                                     required></textarea>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-dark"
+                                    style="background-color: #2B3467;">Submit</button>
                             </div>
                         </form>
                     </div>
