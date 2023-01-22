@@ -22,9 +22,46 @@
             </div>
         </div>
     </div>
+    <!-- Modal Edit Content -->
+    <div class="modal fade" id="contentModalEdit" tabindex="-1" aria-labelledby="contentModalEditLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="contentModalEditLabel">Edit Konten</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/edit/<%= getContent._id %>?_method=PUT" method="post" class="needs-validation"
+                    novalidate>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label">Judul Konten:</label>
+                            <input type="text" class="form-control" name="content[title]" id="title"
+                                value="<%= getContent.title %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="img" class="col-form-label">Banner Konten:</label>
+                            <input type="text" class="form-control" name="content[img]" id="img"
+                                value="<%= getContent.img %>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="contentDesc" class="col-form-label">Deskripsi Konten:</label>
+                            <textarea class="form-control" name="content[desc]" id="contentDesc" cols="30" rows="10"
+                                required=""><%= getContent.desc %></textarea>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-warning">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="card">
-        <img src=" <%=getContent.img %>" class="card-img-top" alt="..." style="max-height: 500px; object-fit: cover;">
+        <img src="<%=getContent.img %>" class="card-img-top" alt="..." style="max-height: 500px; object-fit: cover;">
         <div class="card-body">
             <h5 class="card-title">
                 <%= getContent.title %>
@@ -36,7 +73,8 @@
                 <div class="d-flex justify-content-between">
                     <button class="btn btn-danger" style="width: 10%;" data-bs-toggle="modal"
                         data-bs-target="#contentModalDelete">Hapus</button>
-                    <a href="#" class="btn btn-dark" style="background-color: #2B3467; width: 10%">Edit</a>
+                    <button class="btn btn-dark" style="background-color: #2B3467; width: 10%" data-bs-toggle="modal"
+                        data-bs-target="#contentModalEdit">Edit</button>
                 </div>
                 <% } %>
         </div>

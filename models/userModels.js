@@ -15,6 +15,8 @@ const UserSchema = new Schema({
     address: { type: String, required: true, maxLength: 255 },
     password: { type: String, required: true },
     role: { type: Number, required: true, min: 1, max: 2 },
+    // isBanned: { type: Boolean, required: true },
+    cart: [{ type: Schema.Types.ObjectId }]
 })
 
 module.exports = mongoose.model('User', UserSchema)

@@ -74,11 +74,10 @@
 
             </section>
             <section>
-                <!-- <div class="container"> -->
-                <h3>Newest Product</h3>
-                <div class="row row-cols-1 row-cols-md-4 g-4">
+                <h3>Produk Terbaru</h3>
+                <div class="row row-cols-1 row-cols-md-4 g-4 mb-4">
                     <% for(let product of getNewestProduct){ %>
-                        <a href="/brand/<%= product.brandID %>" class="col"
+                        <a href="/brand/productDetails/<%= product._id %>" class="col"
                             style="text-decoration: inherit;color: inherit;">
                             <div class="card">
                                 <img style="height: 280px;" src="<%= product.productImg %>"
@@ -96,15 +95,13 @@
                         </a>
                         <% } %>
                 </div>
-                <!-- </div> -->
             </section>
 
             <section>
-                <!-- <div class="container"> -->
-                <h3>Featured Product</h3>
+                <h3>Produk Terlaris</h3>
                 <div class="row row-cols-1 row-cols-md-4 g-4">
                     <% for(let product of getFeaturedProduct){ %>
-                        <a href="/brand/<%= product.brandID %>" class="col"
+                        <a href="/brand/productDetails/<%= product._id %>" class="col"
                             style="text-decoration: inherit;color: inherit;">
                             <div class="card">
                                 <img style="height: 280px;" src="<%= product.productImg %>"
@@ -122,5 +119,4 @@
                         </a>
                         <% } %>
                 </div>
-                <!-- </div> -->
             </section>

@@ -1,0 +1,80 @@
+<% layout('layouts/boilerplate') %>
+    <!-- MODAL -->
+    <div class="modal fade" id="brandModalEdit" tabindex="-1" aria-labelledby="brandModalEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="brandModalEditLabel">Edit Brand</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/brand/brandEdit/<%= //getBrand._id %>?_method=PUT" method="post" class="needs-validation"
+                    novalidate>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="brandName" class="col-form-label">Nama Brand:</label>
+                            <input type="text" class="form-control" name="brand[brandName]" id="brandName"
+                                value="<%= //getBrand.brandName %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="brandLogo" class="col-form-label">Logo Brand:</label>
+                            <input type="url" class="form-control" name="brand[brandLogo]" id="brandLogo"
+                                value="<%= //getBrand.brandLogo %>" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-warning">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div style=" padding: 100px; ">
+        <h1 class="text-center" style="font-size: 60px ;">Tentang Kami</h1>
+    </div>
+    <section style="background-color: white;">
+
+        <div class="row p-4">
+            <div class="col-4"><img
+                    src="https://images.pexels.com/photos/247763/pexels-photo-247763.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="asd" style="width: 100%;"></div>
+            <div class="col-8">
+                <h2 class="text-primary">Latar Belakang
+                </h2>
+                <p style="text-align: justify ;">
+                    SUN 21 adalah toko yang berdiri sejak tahun 1998, berlokasi di daerah Pulo Gadung. Toko ini
+                    didirikan
+                    dengan tujuan untuk menyediakan produk-produk berkualitas dengan harga yang terjangkau bagi
+                    masyarakat Indonesia. SUN 21 menyediakan berbagai macam produk, mulai dari bahan pangan, rokok,
+                    hingga
+                    produk bayi. Kami mempercayakan penyediaan produk kami kepada pemasok yang terpercaya dan
+                    telah diuji kualitasnya sehingga dapat memberikan kepuasan kepada pelanggan kami. Dengan fokus pada
+                    pelayanan yang baik dan kepuasan pelanggan, kami berharap dapat menjadi pilihan utama bagi
+                    masyarakat Indonesia dalam berbelanja.</p>
+            </div>
+        </div>
+        <div class="row p-4 bg-secondary bg-opacity-10">
+
+            <div class="col-8">
+                <h2 class="text-primary">Visi & Misi
+                </h2>
+                <p style="text-align: justify ;">Visi kami adalah menjadi toko terpercaya yang menyediakan produk
+                    berkualitas dengan harga terjangkau bagi masyarakat Surabaya.
+                    <br>
+                    Sedangkan misi kami adalah:
+                    <li>Menyediakan produk berkualitas dengan harga yang terjangkau bagi masyarakat Surabaya.</li>
+                    <li>Memastikan pelayanan yang baik dan cepat dalam menangani kebutuhan pelanggan.</li>
+                    <li>Mengembangkan jaringan dengan pemasok yang terpercaya untuk memberikan produk yang berkualitas.
+                    </li>
+                    <li>Terus berinovasi dalam meningkatkan kualitas produk dan pelayanan.</li>
+                    <li>
+                        Mendukung perekonomian lokal dengan mengutamakan produk-produk dari pemasok lokal.
+
+                    </li>
+                </p>
+            </div>
+            <div class="col-4"><img
+                    src="https://images.pexels.com/photos/3782235/pexels-photo-3782235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="asd" style="width: 100%;"></div>
+        </div>
+    </section>

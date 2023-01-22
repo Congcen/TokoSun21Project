@@ -1,0 +1,138 @@
+<% layout('layouts/boilerplate') %>
+    <% const renderIcon=(w, h, icon)=> { %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="<%= w %>" height="<%= h %>" fill="currentColor"
+            class="<%= icon %>" viewBox="0 0 16 16">
+            <path
+                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+            <path fill-rule="evenodd"
+                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+        </svg>
+        <% } %>
+            <div class="modal fade" id="brandModalEdit" tabindex="-1" aria-labelledby="brandModalEditLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="brandModalEditLabel">Edit Brand</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="/brand/brandEdit/<%= //getBrand._id %>?_method=PUT" method="post"
+                            class="needs-validation" novalidate>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="brandName" class="col-form-label">Nama Brand:</label>
+                                    <input type="text" class="form-control" name="brand[brandName]" id="brandName"
+                                        value="<%= //getBrand.brandName %>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="brandLogo" class="col-form-label">Deskripsi:</label>
+                                    <textarea type="url" class="form-control" name="brand[brandLogo]" id="brandLogo"
+                                        required></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-warning">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div style=" padding: 100px; ">
+                <h1 class="text-center">Kenapa memilih kami sebagai suplier?</h1>
+            </div>
+            <section style="background-color: white;">
+                <div class="row p-4">
+                    <div class="col-4"><img
+                            src="https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="asd" style="width: 100%;"></div>
+                    <div class="col-8">
+                        <h2 class="text-primary">Harga Terbaik Untuk Produk yang Kami Tawarkan
+                            <% if(user_role==1) {%>
+                                <span>
+                                    <button style="all: unset; cursor: pointer;" data-bs-toggle="modal"
+                                        data-bs-target="#brandModalEdit">
+                                        <%= renderIcon(16,16,"bi bi-pencil-square") %>
+                                    </button>
+                                </span>
+
+                                <% } %>
+                        </h2>
+
+                        <p style="text-align: justify ;">Harga terbaik untuk produk yang kami tawarkan adalah
+                            fokus
+                            utama kami
+                            dalam
+                            menjalankan bisnis. Kami selalu berusaha untuk menawarkan produk-produk berkualitas
+                            dengan
+                            harga
+                            yang
+                            sesuai dengan kualitasnya. Kami juga selalu mengevaluasi pasar dan mencari cara
+                            untuk
+                            menurunkan
+                            harga
+                            produk tanpa mengurangi kualitas. Kami percaya bahwa dengan menawarkan harga
+                            terbaik, kami
+                            dapat
+                            memuaskan pelanggan dan meningkatkan kepuasan mereka. Kami juga mempercayai bahwa
+                            dengan
+                            menawarkan
+                            harga terbaik, kami dapat membantu meningkatkan daya beli pelanggan kami dan
+                            membantu mereka
+                            untuk
+                            mendapatkan produk yang mereka inginkan tanpa harus merogoh kocek yang terlalu
+                            dalam.
+                        </p>
+                    </div>
+                </div>
+                <div class="row p-4 bg-secondary bg-opacity-10">
+                    <div class="col-8">
+                        <h2 class="text-primary">Pelayanan yang cepat dan menyenangkan
+                        </h2>
+                        <p style="text-align: justify ;">Pelayanan yang cepat dan menyenangkan adalah komitmen kami
+                            dalam
+                            melayani
+                            pelanggan. Kami selalu berusaha untuk memberikan layanan yang cepat dan responsif terhadap
+                            setiap
+                            permintaan pelanggan. Kami juga selalu berusaha untuk membuat proses belanja pelanggan
+                            menjadi
+                            menyenangkan dan nyaman. Kami memiliki tim yang terlatih dan profesional yang selalu siap
+                            untuk
+                            membantu
+                            pelanggan dalam setiap tahap proses belanja. Kami juga selalu memantau kualitas pelayanan
+                            kami dan
+                            berusaha untuk meningkatkannya sesuai dengan kebutuhan pelanggan. Kami percaya bahwa dengan
+                            memberikan
+                            pelayanan yang cepat dan menyenangkan, kami dapat membuat pelanggan merasa puas dan ingin
+                            kembali
+                            berbelanja di tempat kami.
+                        </p>
+                    </div>
+                    <div class="col-4"><img
+                            src="https://images.pexels.com/photos/4393426/pexels-photo-4393426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="asd" style="width: 100%;"></div>
+                </div>
+                <div class="row p-4">
+                    <div class="col-4"><img
+                            src="https://images.pexels.com/photos/3778966/pexels-photo-3778966.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="asd" style="width: 100%;"></div>
+                    <div class="col-8">
+                        <h2 class="text-primary">Telah berpengalaman lebih dari 20 tahun
+                        </h2>
+                        <p style="text-align: justify ;">Kami adalah perusahaan yang telah berpengalaman lebih dari 20
+                            tahun
+                            dalam bidang ini. Selama bertahun-tahun kami telah mengumpulkan pengalaman dan pengetahuan
+                            yang
+                            sangat berharga dalam menjalankan bisnis kami. Kami telah melalui berbagai tantangan dan
+                            kondisi
+                            pasar yang berbeda selama 20 tahun terakhir dan telah belajar dari setiap pengalaman
+                            tersebut. Kami
+                            yakin bahwa pengalaman yang kami miliki akan membantu kami dalam menawarkan produk dan
+                            layanan yang
+                            terbaik bagi pelanggan kami. Kami juga memiliki tim yang berpengalaman dan profesional yang
+                            akan
+                            memastikan bahwa setiap transaksi dengan kami akan lancar dan sesuai dengan harapan
+                            pelanggan.
+                        </p>
+                    </div>
+                </div>
+            </section>

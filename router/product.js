@@ -4,7 +4,8 @@ const catchAsync = require("../utils/catchAsync")
 const ExpressError = require("../utils/ExpressError")
 const BrandModels = require('../models/brandModels');
 const ProductModels = require('../models/productModels');
-const { route } = require('./home');
+const UserModels = require('../models/userModels');
+const { Error } = require('mongoose');
 const msgAdminOnly = "Access Denied! Only an Admin can access this feature"
 
 router.get('/:id', catchAsync(async (req, res, next) => {
@@ -14,6 +15,12 @@ router.get('/:id', catchAsync(async (req, res, next) => {
     const getProductInactive = await ProductModels.find({ productStatus: 0, brandID: id })
     res.render("product/index", { getBrand, getProduct, getProductInactive })
 }))
+router.get('/productDetails/:id', catchAsync(async (req, res) => {
+    const { id } = req.params
+    const getProduct = await ProductModels.findOne({ productStatus: 1, _id: id })
+    const getBrand = await BrandModels.findById(getProduct.brandID)
+    res.render("product/detail", { getProduct, getBrand })
+}))
 router.get('/productEdit/:id', catchAsync(async (req, res) => {
     if (req.session.user_role == 1) {
         const { id } = req.params
@@ -21,7 +28,7 @@ router.get('/productEdit/:id', catchAsync(async (req, res) => {
         const getBrand = await BrandModels.findById(getProduct.brandID)
         res.render("product/edit", { getProduct, getBrand })
     }
-    res.send(msgAdminOnly)
+    throw new ExpressError(msgAdminOnly, 999)
 }))
 router.post('/productAdd/:id', catchAsync(async (req, res) => {
     if (req.session.user_role == 1) {
@@ -38,6 +45,16 @@ router.put('/productEdit/:id', catchAsync(async (req, res) => {
         res.redirect(`/brand/${updatedProduct.brandID}`)
     }
     throw new ExpressError(msgAdminOnly, 999)
+}))
+router.put('/addToCart/:id/:prodId', catchAsync(async (req, res) => {
+    if (req.session.user_role == 2) {
+        const { id, prodId } = req.params
+        const product = await ProductModels.findById(prodId)
+        await UserModels.findByIdAndUpdate(id, { $push: { cart: { prodId } } })
+        // req.flash("success", "Product added successfully!");
+        res.redirect(`/brand/${product.brandID}`)
+    }
+    throw new ExpressError("You need to Login first to make a order", 999)
 }))
 router.delete('/productDelete/:id', catchAsync(async (req, res) => {
     if (req.session.user_role == 1) {

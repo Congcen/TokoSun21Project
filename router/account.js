@@ -5,6 +5,9 @@ const ExpressError = require("../utils/ExpressError")
 const UserModels = require('../models/userModels');
 const bcrypt = require("bcrypt")
 
+router.get('/register', (req, res) => {
+    res.render("account/register")
+})
 router.get('/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params
     const sessionId = req.session.user_id
@@ -14,9 +17,6 @@ router.get('/:id', catchAsync(async (req, res, next) => {
     }
     throw new ExpressError('Account not found', 999);
 }))
-router.get('/register', (req, res) => {
-    res.render("account/register")
-})
 router.post('/register', catchAsync(async (req, res) => {
     const { username, password, email, phone, address, fullname } = req.body.user
     const validateUsername = await UserModels.findOne({ username })
@@ -41,9 +41,9 @@ router.post('/login', catchAsync(async (req, res) => {
         req.session.user_role = user.role
         req.session.user_fname = user.fullname
         res.redirect(`/account/${user._id}`)
-    } else {
-        throw new ExpressError('Invalid Username or Password', 999)
     }
+    throw new ExpressError('Invalid Username or Password', 999)
+    // !!!
 }))
 router.post('/logout', catchAsync(async (req, res) => {
     req.session.destroy()

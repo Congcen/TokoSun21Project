@@ -1,6 +1,7 @@
 const express = require('express')
 const session = require('express-session')
 const mongoose = require('mongoose')
+const multer = require('multer')
 const app = express();
 const methodOverride = require('method-override')
 const ejsMate = require("ejs-mate")
@@ -12,6 +13,29 @@ const brand = require('./router/brand')
 const product = require('./router/product')
 const contact = require('./router/contact')
 const account = require('./router/account')
+const whyUs = require('./router/whyUs.js')
+const aboutUs = require('./router/aboutUs')
+const admin = require('./router/admin')
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+    }
+})
+const upload = multer({ storage: storage })
+const fs = require('fs');
+
+app.get('/upload', (req, res) => {
+    res.render('product/uploadTest')
+});
+app.post('/upload-image', upload.single('image'), (req, res) => {
+    // req.file contains the image file 
+    fs.writeFileSync(`uploads/${req.file.originalname}`, req.file.buffer);
+});
+
 
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs')
@@ -43,13 +67,9 @@ app.use('/brand', brand)
 app.use('/brand', product)
 app.use('/contact', contact)
 app.use('/account', account)
-
-app.get('/whyUs', (req, res) => {
-    res.render("whyUs")
-})
-app.get('/aboutUs', (req, res) => {
-    res.render("aboutUs")
-})
+app.use('/whyUs', whyUs)
+app.use('/aboutUs', aboutUs)
+app.use('/admin', admin)
 
 app.all('*', (req, res, next) => {
     next(new ExpressError("Page not found"), 404)

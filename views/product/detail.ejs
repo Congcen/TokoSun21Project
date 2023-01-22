@@ -1,0 +1,62 @@
+<% layout('layouts/subBoilerplate') %>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item fw-bold"><a style="text-decoration: none; color: #6377e6;"
+                    href="/brand">Brand</a></li>
+            <li class="breadcrumb-item fw-bold"><a style="text-decoration: none; color: #6377e6;"
+                    href="/brand/<%= getBrand._id %>">
+                    <%= getBrand.brandName %>
+                </a></li>
+            <li class="breadcrumb-item active fw-bold" aria-current="page">
+                <%= getProduct.productName %>
+            </li>
+        </ol>
+    </nav>
+    <section class="d-flex">
+        <div style="border-radius: 5%; background-color: white;">
+            <img src="<%= getProduct.productImg %>" alt=""
+                style="width: 500px; height: 500px; border-radius: 5%; object-fit: contain; border: 2px solid rgb(178, 178, 178);">
+        </div>
+        <main class="px-4 col">
+            <div class="px-3 border-bottom border-dark">
+                <h4 style="color: #2B3467;">
+                    <%= getBrand.brandName %>
+                </h4>
+                <h3>
+                    <%= getProduct.productName %>
+                </h3>
+                <h5>
+                    <%= (getProduct.productPrice).toLocaleString('id-ID', { style: 'currency' , currency: 'IDR' }) %>
+                        (<%= getProduct.productQty %>)
+                </h5>
+            </div>
+            <div class="p-3">
+                <p>
+                    <%= getProduct.productDesc %>
+                </p>
+                <form
+                    action="/brand/addToCart/<%if(!user_id) { %>0<%} else { %><%= user_id %><%} %>/<%= getProduct._id %>/?_method=PUT"
+                    method="post">
+                    <div class="input-group mb-3" style="width: 20%;">
+                        <button id="subProduct" class="btn btn-success" type="button" id="button-addon1">-</button>
+                        <input id="qtyInput" type="number" class="form-control" value="1" min="1"
+                            max="<%= getProduct.productQty %>" required>
+                        <button id="addProduct" class="btn btn-success" type="button" id="button-addon1">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-primary"> Add to Cart</button>
+                </form>
+            </div>
+        </main>
+        <script>
+            const add = document.getElementById('addProduct')
+            const sub = document.getElementById('subProduct')
+            const qtyI = document.getElementById('qtyInput')
+
+            add.addEventListener('click', () => {
+                qtyI.value++
+            })
+            sub.addEventListener('click', () => {
+                qtyI.value--
+            })
+        </script>
+    </section>

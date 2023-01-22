@@ -16,7 +16,12 @@
         crossorigin="anonymous"></script>
 </head>
 
-<body class="d-flex flex-column vh-100" style="background-color: #FCFFE7;">
+<body class="d-flex flex-column vh-100" style="background-color: #FCFFE7;
+opacity: 1;
+background-image:  linear-gradient(30deg, #f1f7cb 12%, transparent 12.5%, transparent 87%, #f1f7cb 87.5%, #f1f7cb), linear-gradient(150deg, #f1f7cb 12%, transparent 12.5%, transparent 87%, #f1f7cb 87.5%, #f1f7cb), linear-gradient(30deg, #f1f7cb 12%, transparent 12.5%, transparent 87%, #f1f7cb 87.5%, #f1f7cb), linear-gradient(150deg, #f1f7cb 12%, transparent 12.5%, transparent 87%, #f1f7cb 87.5%, #f1f7cb), linear-gradient(60deg, #f1f7cb77 25%, transparent 25.5%, transparent 75%, #f1f7cb77 75%, #f1f7cb77), linear-gradient(60deg, #f1f7cb77 25%, transparent 25.5%, transparent 75%, #f1f7cb77 75%, #f1f7cb77);
+background-size: 46px 81px;
+background-position: 0 0, 0 0, 23px 40px, 23px 40px, 0 0, 23px 40px;
+">
     <%- include('../partials/navbar') %>
         <main class="container px-5 py-3">
             <%- body %>
