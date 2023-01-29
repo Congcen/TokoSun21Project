@@ -66,7 +66,8 @@ app.use(function (req, res, next) {
 // db connection
 async function main() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/sun21-db')
+        // await mongoose.connect('mongodb://localhost:27017/sun21-db')
+        await mongoose.connect('mongodb://mongo:zTl5N3TJ8OfhndMC6VXN@containers-us-west-97.railway.app:5582')
         console.log("Mongo Connection Open")
     } catch (err) {
         console.log("Oops.. Connection Error")
@@ -92,6 +93,6 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 })
 
-app.listen(process.env.PORT || 7895, function () {
+app.listen(process.env.PORT || 3000, function () {
     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
