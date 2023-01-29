@@ -1,3 +1,10 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
+console.log(process.env.CLOUDINARY_SECRET)
+console.log(process.env.CLOUDINARY_KEY)
+
+
 const express = require('express')
 const session = require('express-session')
 const mongoose = require('mongoose')
@@ -16,24 +23,28 @@ const account = require('./router/account')
 const whyUs = require('./router/whyUs.js')
 const aboutUs = require('./router/aboutUs')
 const admin = require('./router/admin')
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/uploads/')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-    }
-})
-const upload = multer({ storage: storage })
-const fs = require('fs');
+const list = require('./router/list')
+const { storage } = require('./cloudinary')
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, 'public/uploads/')
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+//     }
+// })
+const upload = multer({ storage })
+// const upload = multer({ storage: storage })
+// const fs = require('fs');
 
 app.get('/upload', (req, res) => {
     res.render('product/uploadTest')
 });
-app.post('/upload-image', upload.single('image'), (req, res) => {
+app.post('/upload-image', upload.array('image'), (req, res) => {
     // req.file contains the image file 
-    fs.writeFileSync(`uploads/${req.file.originalname}`, req.file.buffer);
+    console.log(req.files);
+    res.send('ok')
+    // fs.writeFileSync(`uploads/${req.file.originalname}`, req.file.buffer);
 });
 
 
@@ -70,6 +81,7 @@ app.use('/account', account)
 app.use('/whyUs', whyUs)
 app.use('/aboutUs', aboutUs)
 app.use('/admin', admin)
+app.use('/list', list)
 
 app.all('*', (req, res, next) => {
     next(new ExpressError("Page not found"), 404)
@@ -80,6 +92,6 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 })
 
-app.listen(process.env.PORT || 3000, function () {
+app.listen(process.env.PORT || 7895, function () {
     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });

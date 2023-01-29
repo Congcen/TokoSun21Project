@@ -8,11 +8,9 @@
             <div class="col-4">
                 <div class="list-group" id="list-tab" role="tablist">
                     <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list"
-                        href="#list-home" role="tab" aria-controls="list-home">Email</a>
-                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list"
-                        href="#list-profile" role="tab" aria-controls="list-profile">Phone Number</a>
-                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list"
-                        href="#list-messages" role="tab" aria-controls="list-messages">WhatsApp</a>
+                        href="#list-home" role="tab" aria-controls="list-home">Kontak</a>
+                    <a class="list-group-item list-group-item-action " id="list-qna-list" data-bs-toggle="list"
+                        href="#list-qna" role="tab" aria-controls="list-qna">Q&A</a>
                     <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list"
                         href="#list-settings" role="tab" aria-controls="list-settings">Offline Store</a>
                 </div>
@@ -28,156 +26,95 @@
                                     <th scope="col">No</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Keterangan</th>
+                                    <th scope="col">E-mail</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Cong Cen</td>
-                                    <td>0822 8910 4010</td>
-                                    <td>Q&A</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Donna</td>
-                                    <td>0822 8910 4011</td>
-                                    <td>Komplain</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Steve</td>
-                                    <td>0822 8910 4012</td>
-                                    <td>Kritik/Saran</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Dian</td>
-                                    <td>0822 8910 4013</td>
-                                    <td>Order</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">5</th>
-                                    <td>Larry</td>
-                                    <td>0822 8910 4014</td>
-                                    <td>Kerjasama</td>
-                                </tr>
+                                <% i=1 %>
+                                    <% for(let user of getAdmin){ %>
+                                        <tr>
+                                            <th scope="row">
+                                                <%= i %>
+                                            </th>
+                                            <% i++ %>
+                                                <td class="text-capitalize">
+                                                    <%= user.fullname %>
+                                                </td>
+                                                <td>
+                                                    <%= user.phone %>
+                                                </td>
+                                                <td>
+                                                    <%= user.email %>
+                                                </td>
+                                        </tr>
+                                        <% } %>
                             </tbody>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-                        <h1 class="text-primary mb-3">Hubungi Kami via Telepon</h1>
-                        <table class="table table-light table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Phone Number</th>
-                                    <th scope="col">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Cong Cen</td>
-                                    <td>0822 8910 4010</td>
-                                    <td class="text-success fw-bold">Online</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Donna</td>
-                                    <td>0822 8910 4011</td>
-                                    <td class="text-danger fw-bold">Offline</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Steve</td>
-                                    <td>0822 8910 4012</td>
-                                    <td class="text-success fw-bold">Online</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Dian</td>
-                                    <td>0822 8910 4013</td>
-                                    <td class="text-success fw-bold">Online</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">5</th>
-                                    <td>Larry</td>
-                                    <td>0822 8910 4014</td>
-                                    <td class="text-danger fw-bold">Offline</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">6</th>
-                                    <td>Agung</td>
-                                    <td>0822 8910 4015</td>
-                                    <td class="text-danger fw-bold">Offline</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">7</th>
-                                    <td>Elon</td>
-                                    <td>0822 8910 4016</td>
-                                    <td class="text-success fw-bold">Online</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">8</th>
-                                    <td>MarkZ</td>
-                                    <td>0822 8910 4017</td>
-                                    <td class="text-success fw-bold">Online</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
-                        <h1 class="text-primary mb-3">Hubungi Kami via WhatsApp</h1>
-                        <table class="table table-light table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Phone Number</th>
-                                    <th scope="col">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Cong Cen</td>
-                                    <td>0822 8910 4010</td>
-                                    <td class="text-success fw-bold">Online</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Donna</td>
-                                    <td>0822 8910 4011</td>
-                                    <td class="text-danger fw-bold">Offline</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Steve</td>
-                                    <td>0822 8910 4012</td>
-                                    <td class="text-success fw-bold">Online</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Dian</td>
-                                    <td>0822 8910 4013</td>
-                                    <td class="text-success fw-bold">Online</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">5</th>
-                                    <td>Larry</td>
-                                    <td>0822 8910 4014</td>
-                                    <td class="text-danger fw-bold">Offline</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">6</th>
-                                    <td>Agung</td>
-                                    <td>0822 8910 4015</td>
-                                    <td class="text-danger fw-bold">Offline</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="tab-pane fade" id="list-qna" role="tabpanel" aria-labelledby="list-qna-list">
+                        <h1 class="text-primary mb-3">Halo, ada yang bisa kami bantu?</h1>
+                        <div>
+                            <p>
+                                <button class="btn bg-white" style="width: 100%;" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#qna-1" aria-expanded="false"
+                                    aria-controls="qna-1">
+                                    Bagaimana cara saya melakukan order?
+                                </button>
+                            </p>
+                            <div class="collapse my-3" id="qna-1">
+                                <div class="card card-body">
+                                    Anda dapat menguhubungi Admin toko kami untuk melakukan order dengan pergi ke
+                                    halaman
+                                    Kontak.
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <button class="btn bg-white" style="width: 100%;" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#qna-2" aria-expanded="false"
+                                    aria-controls="qna-2">
+                                    Apakah saya diharuskan membuat akun?
+                                </button>
+                            </p>
+                            <div class="collapse my-3" id="qna-2">
+                                <div class="card card-body">
+                                    Ya, anda diharuskan membuat sebuah akun untuk melakukan order jika anda ingin
+                                    melakukan pemesanan by sistem.
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <button class="btn bg-white" style="width: 100%;" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#qna-3" aria-expanded="false"
+                                    aria-controls="qna-3">
+                                    Apakah saya dapat membatalkan pesanan yang telah saya buat?
+                                </button>
+                            </p>
+                            <div class="collapse my-3" id="qna-3">
+                                <div class="card card-body">
+                                    Ya, anda dapat membatalkan pesanan dengan catatan jika pesanan <b>belum
+                                        terkirim.</b>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <button class="btn bg-white" style="width: 100%;" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#qna-4" aria-expanded="false"
+                                    aria-controls="qna-4">
+                                    Bagaimana cara saya mengajukan komplain?
+                                </button>
+                            </p>
+                            <div class="collapse my-3" id="qna-4">
+                                <div class="card card-body">
+                                    Ya, anda dapat mengajukan komplain terhadap pesanan yang rusak/tidak sesuai dengan
+                                    mengkonsultasikannya ke pihak admin toko dengan baik dan sopan
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
                         <h1 class="text-primary">Kunjungi Offline Store kami!</h1>

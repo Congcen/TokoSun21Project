@@ -49,5 +49,30 @@ router.post('/logout', catchAsync(async (req, res) => {
     req.session.destroy()
     res.redirect("/")
 }))
+router.put('/edit/:id', catchAsync(async (req, res) => {
+    const { id } = req.params
+    const sessionId = req.session.user_id
+    const { email, phone, address, fullname } = req.body.user
+    if (sessionId == id) {
+        await UserModels.findByIdAndUpdate(id, { email, phone: `+62${phone}`, address, fullname })
+        req.session.user_fname = fullname
+        res.redirect(`/account/${id}`)
+    }
+    throw new ExpressError('Account not found', 999);
+}))
+router.delete('/delete/:id', catchAsync(async (req, res) => {
+    const { id } = req.params
+    const sessionId = req.session.user_id
+    if (sessionId == id) {
+        if (req.body.confirm === "DELETE") {
+            await UserModels.findByIdAndDelete(id)
+            req.session.destroy()
+            res.redirect("/")
+        }
+        throw new ExpressError('Gagal Menghapus Akun', 999)
+    }
+    throw new ExpressError('Account not found', 999);
+
+}))
 
 module.exports = router

@@ -6,9 +6,10 @@ const UserModels = require('../models/userModels');
 const msgAdminOnly = "Access Denied! Only an Admin can access this feature"
 
 
-router.get('/', (req, res) => {
-    res.render("contact/index")
-})
+router.get('/', catchAsync(async (req, res) => {
+    const getAdmin = await UserModels.find({ role: 1 })
+    res.render("contact/index", { getAdmin })
+}))
 router.post('/registerAdm', catchAsync(async (req, res) => {
     if (req.session.user_role == 1) {
         const { username, password, email, phone, address, fullname } = req.body.user

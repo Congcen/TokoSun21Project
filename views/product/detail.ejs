@@ -39,8 +39,8 @@
                     method="post">
                     <div class="input-group mb-3" style="width: 20%;">
                         <button id="subProduct" class="btn btn-success" type="button" id="button-addon1">-</button>
-                        <input id="qtyInput" type="number" class="form-control" value="1" min="1"
-                            max="<%= getProduct.productQty %>" required>
+                        <input id="qtyInput" type="number" class="form-control" name="cartProduct[qty]" value="1"
+                            min="1" max="<%= getProduct.productQty %>" required>
                         <button id="addProduct" class="btn btn-success" type="button" id="button-addon1">+</button>
                     </div>
                     <button type="submit" class="btn btn-primary"> Add to Cart</button>

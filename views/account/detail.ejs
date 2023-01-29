@@ -1,7 +1,74 @@
 <% layout('layouts/boilerplate') %>
-    <!-- <div style="padding: 100px;">
-        <h1 class="text-center" style="font-size: 60px ;">Anda telah berhasil melakukan Registrasi!</h1>
-    </div> -->
+    <!-- MODAL DELETE ACCOUNT -->
+    <div class="modal fade" id="brandModalDelete" tabindex="-1" aria-labelledby="brandModalDeleteLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="brandModalDeleteLabel">Konfirmasi Penghapusan Akun</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/account/delete/<%= getUser._id %>?_method=DELETE" method="post">
+                    <div class="modal-body">
+                        Ketikan kata <b>DELETE</b> untuk melakukan konfirmasi penghapusan akun
+                        <input type="text" class="form-control my-3" placeholder="DELETE" name="confirm">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger">Hapus</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL EDIT ACCOUNT -->
+    <div class="modal fade" id="brandModalEdit" tabindex="-1" aria-labelledby="brandModalEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="brandModalEditLabel">Edit Akun</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/account/edit/<%= getUser._id %>?_method=PUT" method="post" class="needs-validate"
+                    novalidate>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" value="<%= getUser.username %>"
+                                disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">nama</label>
+                            <input type="text" class="form-control" id="name" value="<%= getUser.fullname %>"
+                                name="user[fullname]">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="email" value="<%= getUser.email %>"
+                                name="user[email]">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Nomor Telepon</label>
+                            <div class="input-group mb-3">
+                                <% const phoneNumber=getUser.phone.slice(3,14) %>
+                                    <span class="input-group-text" id="basic-addon1">+62</span>
+                                    <input type="number" class="form-control" name="user[phone]" id="phone" required
+                                        maxlength="11" value="<%= parseInt(phoneNumber)%>"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Alamat</label>
+                            <textarea class="form-control" name="user[address]" id="" cols="30" rows="5"
+                                id="address"><%= getUser.address %></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <section class="d-flex justify-content-center">
         <img class="img-fluid" src="https://icon-library.com/images/facebook-user-icon/facebook-user-icon-17.jpg"
             alt="..." style="border-radius: 50%; width: 200px; height: 200px;">
@@ -9,7 +76,7 @@
     <h1 class="display-5 text-capitalize text-center py-4">Selamat datang, <%= getUser.fullname %>
     </h1>
     <section class="row">
-        <div class="col-8">
+        <div class="col-9">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Profil Anda</h5>
@@ -30,34 +97,38 @@
                         </span></li>
                 </ul>
                 <div class="card-body d-flex justify-content-between">
-                    <a href="#" class="card-link">Delete Account</a>
-                    <a href="#" class="card-link">Edit Account</a>
+                    <button class="card-link text-danger" data-bs-toggle="modal" data-bs-target="#brandModalDelete"
+                        style="background: none!important;border: none;padding: 0!important;text-decoration: underline;cursor: pointer;">Hapus
+                        Akun</button>
+                    <button class="card-link text-primary" data-bs-toggle="modal" data-bs-target="#brandModalEdit"
+                        style="background: none!important;border: none;padding: 0!important;text-decoration: underline;cursor: pointer;">Edit
+                        Akun</button>
                 </div>
             </div>
             </p>
         </div>
-        <div class="col-4">
-            <div class="card mb-3" style="max-width: 18rem;">
+        <div class="col-3">
+
+            <div class="card mb-3" style="max-width: 18rem; ">
                 <div class="card-header">Riwayat Pemesanan</div>
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action" aria-current="true">
                         <div class="d-flex w-100">
-                            <h5 class="mb-1">List group item heading</h5>
-
+                            <h5 class="mb-1">Comming Soon!</h5>
                         </div>
                         <p class="mb-1">Some placeholder content in a paragraph.</p>
                         <small>And some small print.</small>
                     </a>
                     <a href="#" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100">
-                            <h5 class="mb-1">List group item heading</h5>
+                            <h5 class="mb-1">Comming Soon!</h5>
                         </div>
                         <p class="mb-1">Some placeholder content in a paragraph.</p>
                         <small class="text-muted">And some muted small print.</small>
                     </a>
                     <a href="#" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100">
-                            <h5 class="mb-1">List group item heading</h5>
+                            <h5 class="mb-1">Comming Soon!</h5>
                         </div>
                         <p class="mb-1">Some placeholder content in a paragraph.</p>
                         <small class="text-muted">And some muted small print.</small>

@@ -48,9 +48,11 @@ router.put('/productEdit/:id', catchAsync(async (req, res) => {
 }))
 router.put('/addToCart/:id/:prodId', catchAsync(async (req, res) => {
     if (req.session.user_role == 2) {
+        const { qty } = req.body.cartProduct
         const { id, prodId } = req.params
+        const addToCart = { product_id: prodId, qty: qty }
         const product = await ProductModels.findById(prodId)
-        await UserModels.findByIdAndUpdate(id, { $push: { cart: { prodId } } })
+        await UserModels.findByIdAndUpdate(id, { $push: { cart: { $each: [addToCart] } } })
         // req.flash("success", "Product added successfully!");
         res.redirect(`/brand/${product.brandID}`)
     }
