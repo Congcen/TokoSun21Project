@@ -66,8 +66,8 @@ app.use(function (req, res, next) {
 // db connection
 async function main() {
     try {
-        // await mongoose.connect('mongodb://localhost:27017/sun21-db')
-        await mongoose.connect('mongodb://mongo:zTl5N3TJ8OfhndMC6VXN@containers-us-west-97.railway.app:5582')
+        await mongoose.connect('mongodb://localhost:27017/sun21-db')
+        // await mongoose.connect('mongodb://mongo:zTl5N3TJ8OfhndMC6VXN@containers-us-west-97.railway.app:5582')
         console.log("Mongo Connection Open")
     } catch (err) {
         console.log("Oops.. Connection Error")
